@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Button, Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Alarm, deleteAlarm, scheduleAlarm} from '../util/alarm';
+import {Alarm, deleteAlarm, getAlarm, scheduleAlarm} from '../util/alarm';
 import DatePicker from 'react-native-date-picker';
 
 var width = Dimensions.get('window').width; //full width
@@ -25,7 +25,11 @@ export default function NewAlarm({
 
   //TODO: 렌더링
   const handleNew = () => {
-    scheduleAlarm(date).then(() => {
+    scheduleAlarm(date).then(({id}) => {
+      getAlarm(id).then(addAlarm => {
+        setAlarms((pre: Alarm[]) => [...pre, addAlarm]);
+      });
+
       // setAlarms((pre)=> [...pre, ]);
       navigation.navigate('List');
     });

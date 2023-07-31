@@ -2,13 +2,16 @@ import ReactNativeAN from 'react-native-alarm-notification';
 
 export interface Alarm {
   id: number; // number
+  year: number; // number
+  month: number; // number
+  day: number;
+  hour: number;
+  minute: number; // number
   interval: string; // string
   intervalValue: number; // number
   largeIcon: string; // string (빈 문자열)
   loopSound: boolean; // boolean
   message: string; // string
-  minute: number; // number
-  month: number; // number
   playSound: boolean; // boolean
   scheduleType: string; // string
   second: number; // number
@@ -22,9 +25,6 @@ export interface Alarm {
   vibrate: boolean; // boolean
   vibration: number; // number
   volume: number; // number
-  year: number; // number
-  day: number;
-  hour: number;
 }
 export async function getAlarms(): Promise<Alarm[]> {
   return await ReactNativeAN.getScheduledAlarms();

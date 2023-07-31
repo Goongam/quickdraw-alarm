@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button, ScrollView, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Alarm, getAlarm, getAlarms} from '../util/alarm';
+import {Alarm, getAlarm, getAlarms, stopring} from '../util/alarm';
 import AlarmItem from '../components/AlarmItem';
 
 export default function AlarmList() {
@@ -29,9 +29,16 @@ export default function AlarmList() {
       <TouchableOpacity onPress={handleNewAlarm}>
         <Text style={{color: 'black'}}>새알림</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          stopring();
+        }}>
+        <Text style={{color: 'black'}}>테스트알림종료</Text>
+      </TouchableOpacity>
       <ScrollView style={{flexGrow: 1}}>
         <View>
           <Text>리스트</Text>
+
           <View>
             {alarms.map((alarm, i) => (
               <AlarmItem
