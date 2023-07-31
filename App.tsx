@@ -20,43 +20,14 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import ReactNativeAN from 'react-native-alarm-notification';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import AlarmList from './screen/AlarmList';
+import NewAlarm from './screen/NewAlarm';
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
 const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 1000));
 const alarmNotifData = {
   title: 'My Notification Title',
@@ -90,37 +61,36 @@ const App = () => {
     ReactNativeAN.removeAllFiredNotifications();
     ReactNativeAN.stopAlarmSound();
   };
-
+  const Stack = createNativeStackNavigator();
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="List"
+        screenOptions={{gestureEnabled: false}}>
+        {/* <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
-        <Button title="테스트" onPress={start} />
-        <Button title="테스트2" onPress={stop} />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Button title="테스트" onPress={start} />
+          <Button title="테스트2" onPress={stop} />
         </View>
       </ScrollView>
-    </SafeAreaView>
+
+    </SafeAreaView> */}
+        <Stack.Screen name="List" component={AlarmList} />
+        <Stack.Screen name="NewAlarm" component={NewAlarm} />
+        {/* <Stack.Screen
+          options={{headerShown: false, gestureEnabled: false}}
+          name="Canvas"
+          component={AlarmCanvas}
+        /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

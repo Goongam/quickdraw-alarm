@@ -10,9 +10,17 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.1.7",
+    "@react-navigation/native-stack": "^6.9.13",
     "react": "17.0.2",
     "react-native": "0.67.1",
-    "react-native-alarm-notification": "^1.8.0"
+    "react-native-alarm-notification": "^1.8.0",
+    "react-native-canvas": "^0.1.39",
+    "react-native-date-picker": "^4.2.13",
+    "react-native-safe-area-context": "^4.7.1",
+    "react-native-screens": "^3.23.0",
+    "react-native-webview": "^13.3.1",
+    "socket.io-client": "^4.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
