@@ -1,3 +1,4 @@
+// @ts-ignore
 import ReactNativeAN from 'react-native-alarm-notification';
 
 export interface Alarm {

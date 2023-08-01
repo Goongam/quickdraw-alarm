@@ -21,12 +21,13 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-
+// @ts-ignore
 import ReactNativeAN from 'react-native-alarm-notification';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import AlarmList from './screen/AlarmList';
 import NewAlarm from './screen/NewAlarm';
+import AlarmCanvas from './screen/AlarmCanvas';
 
 const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 1000));
 const alarmNotifData = {
@@ -84,6 +85,11 @@ const App = () => {
     </SafeAreaView> */}
         <Stack.Screen name="List" component={AlarmList} />
         <Stack.Screen name="NewAlarm" component={NewAlarm} />
+        <Stack.Screen
+          name="AlarmCanvas"
+          component={AlarmCanvas}
+          options={{headerShown: false, gestureEnabled: false}}
+        />
         {/* <Stack.Screen
           options={{headerShown: false, gestureEnabled: false}}
           name="Canvas"

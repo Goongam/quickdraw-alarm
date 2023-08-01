@@ -15,11 +15,13 @@ export default function AlarmList() {
   const navi = useNavigation();
 
   const handleNewAlarm = () => {
+    // @ts-ignore
     navi.navigate('NewAlarm', {setAlarms});
   };
 
   const handleClickAlarm = (id: number) => {
     getAlarm(id).then(alarm => {
+      // @ts-ignore
       navi.navigate('NewAlarm', {setAlarms, alarm});
     });
   };
@@ -34,6 +36,12 @@ export default function AlarmList() {
           stopring();
         }}>
         <Text style={{color: 'black'}}>테스트알림종료</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navi.navigate('AlarmCanvas');
+        }}>
+        <Text style={{color: 'black'}}>캔버스이동</Text>
       </TouchableOpacity>
       <ScrollView style={{flexGrow: 1}}>
         <View>
