@@ -40,8 +40,26 @@ export async function getAlarm(id: number) {
   return findAlarm;
 }
 
-export async function isActiveAlarms() {}
+export async function getActiveAlarms() {
+  const alarms: Alarm[] = await getAlarms();
+  const filtered = alarms.filter(alarm => {
+    if (convertDate(alarm) < new Date()) {
+      return true;
+    }
+  });
 
+  return filtered;
+}
+
+export function convertDate(alarm: Alarm) {
+  return new Date(
+    alarm.year,
+    alarm.month - 1,
+    alarm.day,
+    alarm.hour,
+    alarm.minute,
+  );
+}
 export async function deleteAlarm(id: number) {
   return ReactNativeAN.deleteAlarm(id);
 }
@@ -71,10 +89,10 @@ export async function scheduleAlarm(date: Date) {
 }
 
 export async function stopring() {
-  const alarms = await ReactNativeAN.getScheduledAlarms();
-  console.log(alarms.length);
   ReactNativeAN.removeAllFiredNotifications();
   ReactNativeAN.stopAlarmSound();
+  const activeAlarms = await getActiveAlarms();
+  activeAlarms.forEach(alarm => deleteAlarm(alarm.id));
 }
 let openedSubscription: any = null;
 export function subcribeOpenEvent() {

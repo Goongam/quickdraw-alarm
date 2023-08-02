@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Button, ScrollView, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Alarm, getAlarm, getAlarms, stopring} from '../util/alarm';
+import {
+  Alarm,
+  getActiveAlarms,
+  getAlarm,
+  getAlarms,
+  stopring,
+} from '../util/alarm';
 import AlarmItem from '../components/AlarmItem';
 
 export default function AlarmList() {
@@ -25,6 +31,13 @@ export default function AlarmList() {
       navi.navigate('NewAlarm', {setAlarms, alarm});
     });
   };
+
+  getActiveAlarms().then(als => {
+    console.log('활성화 알람 개수', als.length);
+    if (als.length >= 1) {
+      navi.navigate('AlarmCanvas');
+    }
+  });
 
   return (
     <View style={{display: 'flex', flexDirection: 'column'}}>
