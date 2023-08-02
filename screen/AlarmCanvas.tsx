@@ -53,12 +53,8 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
 
   const route = useRoute();
 
-  const {word, setRandomWord} = useWord();
-
-  const stop = useCallback(() => {
-    stopring();
-    navigation.navigate('List');
-  }, [navigation]);
+  const {word, setRandomWord, wordCount, currectCount, currectAnswer} =
+    useWord();
 
   const clearCanvas = useCallback(() => {
     canvas?.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
@@ -71,13 +67,13 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
 
       if (word === data.label) {
         //정답
-        setRandomWord();
+        currectAnswer();
+        //setRandomWord();
         clearCanvas();
-        stop();
       }
       setResult(data);
     },
-    [word, setRandomWord, clearCanvas, stop],
+    [word, currectAnswer, clearCanvas],
   );
   //통신
   useEffect(() => {
@@ -114,6 +110,10 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
     socket.on('message', function (data: Result) {
       receiveMsg(data);
     });
+
+    return () => {
+      socket.off('message');
+    };
   }, [socket, receiveMsg]);
 
   //캔버스 초기설정
@@ -236,7 +236,11 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
       }}>
       <Time />
       <View style={styles.scoreLayout}>
-        <Text style={{fontSize: 30, fontWeight: '200'}}>10/10</Text>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: '200',
+          }}>{`${currectCount}/${wordCount}`}</Text>
       </View>
 
       <View style={styles.wordLayout}>

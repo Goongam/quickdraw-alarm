@@ -9,8 +9,6 @@ export function useSocket(namespace?: string | undefined) {
     socket = undefined;
   }, []);
 
-  console.log('socket', socket);
-
   if (!socket) {
     socket = SocketIOClient('http://221.141.68.153:3000', {
       autoConnect: true,

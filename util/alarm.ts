@@ -1,5 +1,8 @@
 // @ts-ignore
 import ReactNativeAN from 'react-native-alarm-notification';
+import {NativeEventEmitter, NativeModules} from 'react-native';
+const {RNAlarmNotification} = NativeModules;
+const RNAlarmEmitter = new NativeEventEmitter(RNAlarmNotification);
 
 export interface Alarm {
   id: number; // number
@@ -37,6 +40,8 @@ export async function getAlarm(id: number) {
   return findAlarm;
 }
 
+export async function isActiveAlarms() {}
+
 export async function deleteAlarm(id: number) {
   return ReactNativeAN.deleteAlarm(id);
 }
@@ -59,6 +64,7 @@ export async function scheduleAlarm(date: Date) {
     ...alarmNotifData,
     fire_date: ReactNativeAN.parseDate(date),
   });
+  subcribeOpenEvent();
   console.log('알람 추가:', alarm);
 
   return alarm;
@@ -69,4 +75,16 @@ export async function stopring() {
   console.log(alarms.length);
   ReactNativeAN.removeAllFiredNotifications();
   ReactNativeAN.stopAlarmSound();
+}
+let openedSubscription: any = null;
+export function subcribeOpenEvent() {
+  if (openedSubscription) {
+    openedSubscription.remove();
+  }
+
+  RNAlarmEmitter.addListener('OnNotificationOpened', data =>
+    console.log('앱 킴:', data),
+  );
+
+  console.log(RNAlarmEmitter.listenerCount('OnNotificationOpened'));
 }
