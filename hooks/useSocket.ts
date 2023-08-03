@@ -10,7 +10,7 @@ export function useSocket(namespace?: string | undefined) {
   }, []);
 
   if (!socket) {
-    socket = SocketIOClient('http://221.141.68.153:3000', {
+    socket = SocketIOClient('http://18.208.144.99:3333', {
       autoConnect: true,
     });
   }

@@ -25,9 +25,12 @@ import Time from '../components/Time';
 import {useRoute} from '@react-navigation/native';
 import {stopring} from '../util/alarm';
 import {useWord} from '../hooks/useWord';
+import {translate_words} from '../util/word';
+import {Difficulty, getDifficulty} from '../util/storage';
 interface Result {
   label: string;
   score: number;
+  korLabel: string;
 }
 
 function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
@@ -47,7 +50,7 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
   const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
   //결과값
-  const [result, setResult] = useState({label: '?', score: 0});
+  const [result, setResult] = useState({label: '?', score: 0, korLabel: '?'});
 
   const {socket, disconnect} = useSocket();
 
@@ -60,18 +63,30 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
     canvas?.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
   }, [canvas]);
 
+  // const difficulty: Difficulty = 'normal';
   const receiveMsg = useCallback(
-    (data: Result) => {
-      console.log('서버로부터 메시지를 받음:', data);
-      console.log(word, data.label, word === data.label.toString());
-
-      if (word === data.label) {
+    async (data: Result[]) => {
+      //난이도
+      let AnswerCondition;
+      const difficulty = await getDifficulty();
+      if (difficulty === 'normal') {
+        //보통
+        AnswerCondition = data.find(element => {
+          console.log(element.korLabel);
+          if (element.label === word) {
+            return true;
+          }
+        });
+      } else if (difficulty === 'hard') {
+        //어려움
+        AnswerCondition = data[0].label === word;
+      }
+      if (AnswerCondition) {
         //정답
         currectAnswer();
-        //setRandomWord();
         clearCanvas();
       }
-      setResult(data);
+      setResult(data[0]);
     },
     [word, currectAnswer, clearCanvas],
   );
@@ -107,7 +122,7 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
   //소켓 이벤트 등록
   useEffect(() => {
     // 서버로부터 메시지를 받을 때 처리
-    socket.on('message', function (data: Result) {
+    socket.on('message', function (data: Result[]) {
       receiveMsg(data);
     });
 
@@ -249,7 +264,7 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
             fontSize: 30,
             fontWeight: 'bold',
           }}>
-          {`${word}를 그리세요`}
+          {`${translate_words[word]}을(를) 그리세요`}
         </Text>
       </View>
 
@@ -285,7 +300,7 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
               fontSize: 24,
               fontWeight: 'bold',
             }}>
-            {result.label} ({Math.floor(result.score * 100)}%)
+            {result.korLabel} ({Math.floor(result.score * 100)}%)
           </Text>
         </View>
       </View>
