@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, Button, Dimensions} from 'react-native';
+import {View, Text, Button, Dimensions, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Alarm, deleteAlarm, getAlarm, scheduleAlarm} from '../util/alarm';
 import DatePicker from 'react-native-date-picker';
+import ColorButton from '../components/ColorButton';
 
-var width = Dimensions.get('window').width; //full width
+const screen_width = Dimensions.get('window').width; //full width
+const screen_height = Dimensions.get('window').height; //full width
 interface Params {
   setAlarms: any;
   alarm?: Alarm;
@@ -20,19 +22,24 @@ export default function NewAlarm({
   route: any;
 }) {
   //   console.log(route.params);
+  const [title, setTitle] = useState('');
   const [date, setDate] = useState(new Date(Date.now() + 1000 * 60));
   const {setAlarms, alarm} = route.params;
 
   //TODO: 렌더링
   const handleNew = () => {
-    scheduleAlarm(date).then(({id}) => {
-      getAlarm(id).then(addAlarm => {
-        setAlarms((pre: Alarm[]) => [...pre, addAlarm]);
-      });
+    scheduleAlarm(date, title)
+      .then(({id}) => {
+        getAlarm(id).then(addAlarm => {
+          setAlarms((pre: Alarm[]) => [...pre, addAlarm]);
+        });
 
-      // setAlarms((pre)=> [...pre, ]);
-      navigation.navigate('List');
-    });
+        // setAlarms((pre)=> [...pre, ]);
+        navigation.navigate('List');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const handleDelete = () => {
@@ -50,11 +57,30 @@ export default function NewAlarm({
       style={{
         display: 'flex',
         height: '100%',
+        width: screen_width,
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
+      <TextInput
+        style={{
+          color: 'black',
+          borderColor: 'black',
+          borderBottomWidth: 1,
+          height: 40,
+          // width: '100%',
+          textAlign: 'center',
+          marginRight: 20,
+          marginLeft: 20,
+        }}
+        placeholderTextColor={'gray'}
+        placeholder="알람 제목을 입력..."
+        onChangeText={transPoint => setTitle(transPoint)}
+        value={title}
+        maxLength={15}
+        returnKeyType="done"
+      />
       <DatePicker
-        style={{marginTop: 10, width}}
+        style={{marginTop: 10, height: screen_height / 2, width: screen_width}}
         date={
           alarm
             ? new Date(
@@ -67,18 +93,13 @@ export default function NewAlarm({
             : date
         }
         onDateChange={setDate}
-        fadeToColor={'black'}
+        fadeToColor={'white'}
         textColor="black"
       />
-      {/* {alarm ? (
-        <Button title="수정" onPress={handleModify} />
-      ) : (
-        <Button title="추가" onPress={handleNew} />
-      )} */}
       {alarm ? (
-        <Button title="삭제" onPress={handleDelete} />
+        <ColorButton text="삭제" onPress={handleDelete} />
       ) : (
-        <Button title="추가" onPress={handleNew} />
+        <ColorButton text="추가" onPress={handleNew} />
       )}
     </View>
   );

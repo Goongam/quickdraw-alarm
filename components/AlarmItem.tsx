@@ -40,7 +40,7 @@ export default function AlarmItem({alarm, handlePress}: Props) {
           paddingRight: 10,
           //   height: 20,
         }}>
-        <Text>제목</Text>
+        <Text>{alarm.title}</Text>
         <Text>
           {alarm.year}년 {alarm.month}월 {alarm.day}일
         </Text>

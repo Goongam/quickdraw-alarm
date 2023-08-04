@@ -1,8 +1,8 @@
 // @ts-ignore
 import ReactNativeAN from 'react-native-alarm-notification';
-import {NativeEventEmitter, NativeModules} from 'react-native';
-const {RNAlarmNotification} = NativeModules;
-const RNAlarmEmitter = new NativeEventEmitter(RNAlarmNotification);
+import {NativeModules} from 'react-native';
+// const {RNAlarmNotification} = NativeModules;
+// const RNAlarmEmitter = new NativeEventEmitter(RNAlarmNotification);
 
 export interface Alarm {
   id: number; // number
@@ -65,8 +65,8 @@ export async function deleteAlarm(id: number) {
 }
 
 const alarmNotifData = {
-  title: 'My Notification Title',
-  message: 'My Notification Message',
+  title: '알림',
+  message: '터치해서 알람을 종료하세요',
   channel: 'my_channel_id',
   small_icon: 'ic_launcher',
   // sound_name: 'drre.mp3',
@@ -77,12 +77,13 @@ const alarmNotifData = {
   data: {foo: 'bar'},
 };
 
-export async function scheduleAlarm(date: Date) {
+export async function scheduleAlarm(date: Date, title: string) {
   const alarm = await ReactNativeAN.scheduleAlarm({
     ...alarmNotifData,
     fire_date: ReactNativeAN.parseDate(date),
+    title: title,
   });
-  subcribeOpenEvent();
+  // subcribeOpenEvent();
   console.log('알람 추가:', alarm);
 
   return alarm;
@@ -94,15 +95,15 @@ export async function stopring() {
   const activeAlarms = await getActiveAlarms();
   activeAlarms.forEach(alarm => deleteAlarm(alarm.id));
 }
-let openedSubscription: any = null;
-export function subcribeOpenEvent() {
-  if (openedSubscription) {
-    openedSubscription.remove();
-  }
+// let openedSubscription: any = null;
+// // export function subcribeOpenEvent() {
+// //   if (openedSubscription) {
+// //     openedSubscription.remove();
+// //   }
 
-  RNAlarmEmitter.addListener('OnNotificationOpened', data =>
-    console.log('앱 킴:', data),
-  );
+// //   RNAlarmEmitter.addListener('OnNotificationOpened', data =>
+// //     console.log('앱 킴:', data),
+// //   );
 
-  console.log(RNAlarmEmitter.listenerCount('OnNotificationOpened'));
-}
+// //   console.log(RNAlarmEmitter.listenerCount('OnNotificationOpened'));
+// // }

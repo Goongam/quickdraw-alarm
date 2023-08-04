@@ -27,6 +27,7 @@ import {stopring} from '../util/alarm';
 import {useWord} from '../hooks/useWord';
 import {translate_words} from '../util/word';
 import {Difficulty, getDifficulty} from '../util/storage';
+import Termination from '../components/Termination';
 interface Result {
   label: string;
   score: number;
@@ -249,6 +250,7 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
         display: 'flex',
         justifyContent: 'flex-start',
       }}>
+      <Termination />
       <Time />
       <View style={styles.scoreLayout}>
         <Text

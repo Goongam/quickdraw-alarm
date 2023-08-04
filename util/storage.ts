@@ -24,6 +24,8 @@ export async function getWordCount() {
 
 export type Difficulty = 'normal' | 'hard';
 
+export const difficultyList: Difficulty[] = ['normal', 'hard'];
+
 export async function setDifficulty(difficulty: Difficulty) {
   try {
     return await AsyncStorage.setItem(storage_key.difficulty, `${difficulty}`);

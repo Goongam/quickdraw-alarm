@@ -11,11 +11,13 @@
 import React, {useEffect} from 'react';
 import {
   Button,
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -24,10 +26,11 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 // @ts-ignore
 import ReactNativeAN from 'react-native-alarm-notification';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import AlarmList from './screen/AlarmList';
 import NewAlarm from './screen/NewAlarm';
 import AlarmCanvas from './screen/AlarmCanvas';
+import Option from './screen/Option';
 
 const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 1000));
 const alarmNotifData = {
@@ -48,20 +51,7 @@ const App = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const start = async () => {
-    const alarm = await ReactNativeAN.scheduleAlarm({
-      ...alarmNotifData,
-      fire_date: ReactNativeAN.parseDate(new Date(Date.now() + 1000)),
-    });
-    console.log(alarm); // { id: 1 }
-  };
-
-  const stop = async () => {
-    const alarms = await ReactNativeAN.getScheduledAlarms();
-    console.log(alarms.length);
-    ReactNativeAN.removeAllFiredNotifications();
-    ReactNativeAN.stopAlarmSound();
-  };
+  // const navi = useNavigation();
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
@@ -83,18 +73,18 @@ const App = () => {
       </ScrollView>
 
     </SafeAreaView> */}
-        <Stack.Screen name="List" component={AlarmList} />
+        <Stack.Screen
+          name="List"
+          component={AlarmList}
+          // options={}
+        />
         <Stack.Screen name="NewAlarm" component={NewAlarm} />
         <Stack.Screen
           name="AlarmCanvas"
           component={AlarmCanvas}
           options={{headerShown: false, gestureEnabled: false}}
         />
-        {/* <Stack.Screen
-          options={{headerShown: false, gestureEnabled: false}}
-          name="Canvas"
-          component={AlarmCanvas}
-        /> */}
+        <Stack.Screen name="Option" component={Option} />
       </Stack.Navigator>
     </NavigationContainer>
   );
