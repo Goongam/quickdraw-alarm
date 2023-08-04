@@ -11,12 +11,14 @@ import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import {
   Alarm,
+  convertDate,
   getActiveAlarms,
   getAlarm,
   getAlarms,
   stopring,
 } from '../util/alarm';
 import AlarmItem from '../components/AlarmItem';
+import ColorButton from '../components/ColorButton';
 
 export default function AlarmList() {
   const [alarms, setAlarms] = useState<Alarm[]>([]);
@@ -71,41 +73,32 @@ export default function AlarmList() {
     });
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // console.log(router.name);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     // console.log(router.name);
 
-      getActiveAlarms().then(als => {
-        console.log('활성화 알람 개수', als.length);
-        if (als.length >= 1) {
-          //@ts-ignore
-          navi.navigate('AlarmCanvas');
-        }
-      });
-    }, 500);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [navi]);
+  //     getActiveAlarms().then(als => {
+  //       if (als.length) {
+  //         als.forEach(ala => {
+  //           console.log('활성화 알람:', convertDate(ala), new Date());
+  //         });
+  //       } else {
+  //         console.log('활성화 알람 없음...');
+  //       }
+
+  //       if (als.length >= 1) {
+  //         //@ts-ignore
+  //         navi.navigate('AlarmCanvas');
+  //       }
+  //     });
+  //   }, 500);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [navi]);
 
   return (
-    <View style={{display: 'flex', flexDirection: 'column'}}>
-      {/* <TouchableOpacity onPress={handleNewAlarm}>
-        <Text style={{color: 'black'}}>새알림</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          stopring();
-        }}>
-        <Text style={{color: 'black'}}>테스트알림종료</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          //@ts-ignore
-          navi.navigate('AlarmCanvas');
-        }}>
-        <Text style={{color: 'black'}}>캔버스이동</Text>
-      </TouchableOpacity> */}
+    <View style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
       <ScrollView style={{flexGrow: 1}}>
         <View>
           <Text>리스트</Text>
@@ -121,6 +114,29 @@ export default function AlarmList() {
           </View>
         </View>
       </ScrollView>
+      <TouchableOpacity
+        style={{
+          height: 40,
+          backgroundColor: '#91C8E4',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => {
+          //@ts-ignore
+          navi.navigate('AlarmCanvas');
+        }}>
+        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>
+          알람 종료하러 가기
+        </Text>
+      </TouchableOpacity>
+      {/* <Text
+        text="알람 끄기"
+        onPress={() => {
+          //@ts-ignore
+          navi.navigate('AlarmCanvas');
+        }}
+      /> */}
     </View>
   );
 }

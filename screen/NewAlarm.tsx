@@ -60,6 +60,7 @@ export default function NewAlarm({
         width: screen_width,
         flexDirection: 'column',
         justifyContent: 'center',
+        // alignItems: 'center',
       }}>
       <TextInput
         style={{
@@ -72,15 +73,22 @@ export default function NewAlarm({
           marginRight: 20,
           marginLeft: 20,
         }}
+        autoFocus={true}
         placeholderTextColor={'gray'}
-        placeholder="알람 제목을 입력..."
+        textAlign="left"
+        placeholder="알람 이름"
         onChangeText={transPoint => setTitle(transPoint)}
         value={title}
         maxLength={15}
         returnKeyType="done"
       />
       <DatePicker
-        style={{marginTop: 10, height: screen_height / 2, width: screen_width}}
+        style={{
+          marginTop: 10,
+          height: screen_height / 3,
+          width: screen_width - 10,
+          margin: 5,
+        }}
         date={
           alarm
             ? new Date(

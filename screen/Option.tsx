@@ -48,7 +48,7 @@ export default function Option() {
         title="맞춰야 할 단어 개수"
       />
       <OptionItemDropDown
-        title="AI 정답 판정"
+        title="AI 정답 판정 난이도"
         value={difficulty}
         handleValueChange={difficultyChange}
         list={difficultyList}

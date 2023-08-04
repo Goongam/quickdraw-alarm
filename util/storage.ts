@@ -5,7 +5,7 @@ export async function setWordCount(count: number) {
   try {
     return await AsyncStorage.setItem(storage_key.word_count, `${count}`);
   } catch (e) {
-    throw new Error('save error: word-count');
+    console.error('save error: word-count');
   }
 }
 
@@ -18,7 +18,8 @@ export async function getWordCount() {
     }
     return wordCount;
   } catch (e) {
-    throw new Error('get error: word-count');
+    console.error('get error: word-count');
+    return INIT_WORD_COUNT;
   }
 }
 
@@ -30,7 +31,7 @@ export async function setDifficulty(difficulty: Difficulty) {
   try {
     return await AsyncStorage.setItem(storage_key.difficulty, `${difficulty}`);
   } catch (e) {
-    throw new Error('save error: difficulty');
+    console.error('save error: difficulty');
   }
 }
 
@@ -43,6 +44,8 @@ export async function getDifficulty() {
     }
     return difficulty;
   } catch (e) {
-    throw new Error('get error: difficulty');
+    // console.err('get error: difficulty');
+    console.error('get error: difficulty');
+    return INIT_DIFFICULTY;
   }
 }

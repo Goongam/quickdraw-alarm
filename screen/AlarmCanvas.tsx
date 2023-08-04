@@ -73,7 +73,6 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
       if (difficulty === 'normal') {
         //보통
         AnswerCondition = data.find(element => {
-          console.log(element.korLabel);
           if (element.label === word) {
             return true;
           }
@@ -142,7 +141,6 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
     c.height = canvasLayoutHeight; //or screenHeight
     c.getContext('2d').fillStyle = '#000000';
     c.getContext('2d').fillRect(0, 0, c.width, c.height);
-    console.log('높이:', c.height);
   };
 
   const viewRef = useRef(null);
@@ -275,7 +273,7 @@ function AlarmCanvas({navigation}: {navigation: any}): JSX.Element {
         onLayout={event => {
           setCanvasX(event.nativeEvent.layout.x);
           setCanvasY(event.nativeEvent.layout.y);
-          console.log(event.nativeEvent.layout.height);
+
           setCanvasLayoutHeight(event.nativeEvent.layout.height);
         }}>
         <View

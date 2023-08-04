@@ -82,6 +82,8 @@ export async function scheduleAlarm(date: Date, title: string) {
     ...alarmNotifData,
     fire_date: ReactNativeAN.parseDate(date),
     title: title,
+    loop_sound: true,
+    volume: 1.0,
   });
   // subcribeOpenEvent();
   console.log('알람 추가:', alarm);
