@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface AlarmApp2Tests : XCTestCase
+@interface DrawWakeTests : XCTestCase
 
 @end
 
-@implementation AlarmApp2Tests
+@implementation DrawWakeTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
