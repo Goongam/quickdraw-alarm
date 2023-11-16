@@ -101,8 +101,6 @@ export default function AlarmList() {
     <View style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
       <ScrollView style={{flexGrow: 1}}>
         <View>
-          <Text>리스트</Text>
-
           <View>
             {alarms.map((alarm, i) => (
               <AlarmItem
