@@ -29,6 +29,7 @@ server: nodejs express, AWS EC2
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 <img src="https://img.shields.io/badge/nodedotjs-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
 <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
+
 </div>
 
 
@@ -38,7 +39,7 @@ server: nodejs express, AWS EC2
 
 - 알람종료시 CANVAS 그림그리기<br>
   ![1](https://github.com/Goongam/quickdraw-alarm/assets/59019137/a1d5025a-b9e0-4e93-8804-63d8130bf7c7)
-
+  ![drawAwake 시연](https://github.com/Goongam/quickdraw-alarm/assets/59019137/cab28d6e-bda8-4a9f-a258-124ea08296bb)
 - AI의 그림 예측 및 제시 단어와 비교 후 알람 종료 카운트 증가
 - 설정: AI 그림 판정 난이도 설정
 - 설정: 맞춰야 할 단어 개수 지정<br>
